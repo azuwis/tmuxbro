@@ -55,8 +55,8 @@ func_menu () {
 get_pane_list () {
   pane_list=`tmux list-panes -a -t ssh-$sid -F "#{pane_id}" | grep -v '^%0$' | sort -t% -n -k2`
   OLD_IFS=$IFS; IFS=\n
-  prev_pane=`echo $pane_list | grep -B1 "$curr_pane" | head -n1`
-  next_pane=`echo $pane_list | grep -A1 "$curr_pane" | tail -n1`
+  prev_pane=`echo $pane_list | grep -Fx -B1 "$curr_pane" | head -n1`
+  next_pane=`echo $pane_list | grep -Fx -A1 "$curr_pane" | tail -n1`
   IFS=$OLD_IFS
 }
 
