@@ -31,7 +31,7 @@ func_menu () {
   fi
 
   get_pane_list
-  list=`tmux list-panes -a -t ssh-$sid -F "#{pane_id}  #{pane_start_command} " | grep -v '^%0 ' | sort`
+  list=`tmux list-panes -a -t ssh-$sid -F "#{pane_id}  #{pane_start_command} " | grep -v '^%0 ' | sort -t% -n -k2`
   list=`echo "$list" | sed "s:^$curr_pane \(.*\)$:$curr_pane [1;42m\\1[m:g"`
   if [ $do_multicast = 0 ]; then
     for x in $tagged_pane; do
@@ -53,7 +53,7 @@ func_menu () {
 }
 
 get_pane_list () {
-  pane_list=`tmux list-panes -a -t ssh-$sid -F "#{pane_id}" | grep -v '^%0$' | sort`
+  pane_list=`tmux list-panes -a -t ssh-$sid -F "#{pane_id}" | grep -v '^%0$' | sort -t% -n -k2`
   OLD_IFS=$IFS; IFS=\n
   prev_pane=`echo $pane_list | grep -B1 "$curr_pane" | head -n1`
   next_pane=`echo $pane_list | grep -A1 "$curr_pane" | tail -n1`
